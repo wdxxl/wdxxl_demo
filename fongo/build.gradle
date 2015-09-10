@@ -1,0 +1,12 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+repositories{
+    mavenCentral()
+}
+
+dependencies{
+    compile 'log4j:log4j:1.2.17'
+}
+
