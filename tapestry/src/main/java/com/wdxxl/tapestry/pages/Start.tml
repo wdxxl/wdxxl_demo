@@ -1,3 +1,14 @@
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
-${prop:greeting}
+    ${prop:greeting}
+    <p xml:space="preserve">
+        <t:pageLink page="literal:Another" style="color:red">Another</t:pageLink>
+    </p>
+    <p>
+        <t:actionLink t:id="actionLink1">Another(ActionLink)</t:actionLink>
+    </p>
+    
+    <t:form t:id="form1">
+    	<t:textfield value="theValue"/>
+    	<input type="submit" value="Submit"/>
+    </t:form>
 </html>
