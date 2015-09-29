@@ -13,6 +13,7 @@ public class SpyListTest {
 	public void testSpyList() {
 		List<String> list = new LinkedList<>();
 		List<String> spy = Mockito.spy(list);
+		//spy的原理是，如果不打桩默认都会执行真实的方法，如果打桩则返回桩实现。
 		Mockito.when(spy.size()).thenReturn(100);
 		
 		spy.add("one");

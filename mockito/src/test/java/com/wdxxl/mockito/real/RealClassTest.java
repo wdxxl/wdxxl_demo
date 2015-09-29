@@ -31,7 +31,7 @@ public class RealClassTest {
 		
 		//auto mock method by mockito
 		public void doSomethingB() {
-			System.out.println("I Say doSomethingB!!");
+			System.out.println("you should not see this message.");
 		}
 	}
 }
