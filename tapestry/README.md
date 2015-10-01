@@ -6,7 +6,7 @@
 2. http://localhost:8080/tapestry/
 3. http://localhost:8080/tapestry/another
 
-**Login&Welcom demo:** 
+**Login&Welcome demo:** 
 
 1. http://localhost:8080/tapestry/login 
 2. http://localhost:8080/tapestry/welcome
