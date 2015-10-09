@@ -1,0 +1,12 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories{
+    mavenCentral()
+}
+
+dependencies {
+    compile 'junit:junit:4.11'
+    compile 'org.powermock:powermock-api-mockito:1.6.3'
+    compile 'org.powermock:powermock-module-junit4:1.6.3'
+}
