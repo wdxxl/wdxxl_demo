@@ -3,8 +3,11 @@ package com.wdxxl.lucene.util.mockdata;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MockDataUtil {
+    public static final Integer LENGTH = 6;
     public static final String[] IDS = {"1", "2", "3", "4", "5", "6"};
     public static final String[] EMAILS = {
         "aa@wdxxl.com",
@@ -23,6 +26,7 @@ public class MockDataUtil {
     public static final String[] NAMES = {"zhangsan", "lisi", "john", "jetty", "mike", "jake"};
     public static final int[] ATTACHS = {2, 3, 1, 4, 5, 6};
     public static final Date[] DATES;
+    public static Map<String, Float> SCORES = new HashMap<>();
 
     static {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -37,5 +41,8 @@ public class MockDataUtil {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        // For Boost
+        SCORES.put("wdxxl.com", 2.0f);
+        SCORES.put("sinobot.org", 1.5f);
     }
 }
