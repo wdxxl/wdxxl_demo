@@ -8,3 +8,7 @@ http://blog.csdn.net/jackiehff/article/details/14000779
 
 Using PowerMock with Mockito
 https://code.google.com/p/powermock/wiki/MockitoUsage13
+
+# 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(CallPrivateMethod.class)
