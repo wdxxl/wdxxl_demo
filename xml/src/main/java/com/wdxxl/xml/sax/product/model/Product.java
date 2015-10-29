@@ -159,6 +159,17 @@ public class Product {
         this.color.add(color);
     }
 
+    public String retrieveColor(String colorName) {
+        if (colorName != null && color != null) {
+            for (int i = 0; i < color.size(); i++) {
+                if (colorName.equals(color.get(i).getName())) {
+                    return color.get(i).getImageURL();
+                }
+            }
+        }
+        return null;
+    }
+
     public List<InStock> getInStock() {
         return inStock;
     }

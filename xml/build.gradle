@@ -8,4 +8,5 @@ repositories{
 dependencies {
     compile 'junit:junit:4.11'
     compile 'com.alibaba:fastjson:1.2.7'
+    compile 'commons-beanutils:commons-beanutils:1.9.2'
 }

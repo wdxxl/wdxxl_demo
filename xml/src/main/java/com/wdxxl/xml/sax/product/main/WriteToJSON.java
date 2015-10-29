@@ -1,5 +1,6 @@
 package com.wdxxl.xml.sax.product.main;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import com.wdxxl.xml.sax.product.model.Color;
 import com.wdxxl.xml.sax.product.model.InStock;
 import com.wdxxl.xml.sax.product.model.Product;
 import com.wdxxl.xml.sax.product.model.ProductURL;
+import com.wdxxl.xml.sax.product.model.SplitProductInStock;
+
+import org.apache.commons.beanutils.BeanUtils;
 
 public class WriteToJSON {
     public static void main(String[] args) {
@@ -81,7 +85,28 @@ public class WriteToJSON {
         product.setTime("Tue, 27 Oct 2015 03:03:23 GMT");
 
         String jsonString = JSON.toJSONString(product, SerializerFeature.UseSingleQuotes);
-        System.out.println(jsonString);
+        // System.out.println(jsonString);
+
+        for (int i = 0; i < product.getInStock().size(); i++) {
+            SplitProductInStock split = new SplitProductInStock();
+            try {
+                BeanUtils.copyProperties(split, product);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            split.setProductColor(product.getInStock().get(i).getColor());
+            split.setColorImageURL(product.retrieveColor(product.getInStock().get(i).getColor()));
+            split.setSku(product.getInStock().get(i).getSku());
+            split.setInStockSize(product.getInStock().get(i).getSize());
+            split.setInStockColor(product.getInStock().get(i).getColor());
+            split.setInStockPrice(product.getInStock().get(i).getPrice());
+
+            jsonString = JSON.toJSONString(split, SerializerFeature.UseSingleQuotes);
+            System.out.println(jsonString);
+        }
+
+
 
         // Product parsedProduct = JSON.parseObject(jsonString, Product.class);
         // System.out.println(parsedProduct.getBrand());
