@@ -1,0 +1,18 @@
+<!ELEMENT Products (Product*)>
+<!ELEMENT Product (Retailer,ProductId,Name,Brand,Price,Description,ProductURL*,ImageURL,AlternateImages,Category*,Size*,Color*,InStock*,Time)>
+<!ELEMENT AlternateImages (ImageURL*)>
+<!ELEMENT Category (Part*)>
+<!ELEMENT InStock (SKU,Size,Color,Price)>
+<!ELEMENT Color (Name?,ImageURL?)>
+<!ELEMENT Retailer (#PCDATA)>
+<!ELEMENT ProductId (#PCDATA)>
+<!ELEMENT Name (#PCDATA)>
+<!ELEMENT Price (#PCDATA)>
+<!ELEMENT Description (#PCDATA)>
+<!ELEMENT ProductURL (#PCDATA)>
+<!ATTLIST ProductURL type CDATA "feed">
+<!ELEMENT ImageURL (#PCDATA)>
+<!ELEMENT Part (#PCDATA)>
+<!ELEMENT SKU (#PCDATA)>
+<!ELEMENT Size (#PCDATA)>
+<!ELEMENT Time (#PCDATA)>
