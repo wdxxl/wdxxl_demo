@@ -17,7 +17,8 @@ public class SAXDemo {
         factory.setValidating(true);
         SAXParser parser = factory.newSAXParser();
         SaxHandler handler = new SaxHandler();
-        parser.parse(new File(System.getProperty("user.dir") + "/lib/sample.xml"), handler);
+        parser.parse(new File(System.getProperty("user.dir") + "/src/test/resources/sample.xml"),
+                handler);
     }
 }
 

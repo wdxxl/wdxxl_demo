@@ -1,24 +1,24 @@
 package com.wdxxl.xml.sax.product.model;
 
 
-public class Color {
-    private String name;
+public class ProductUrl {
+    private String type;
     private String imageUrl;
 
-    public Color() {
+    public ProductUrl() {
     }
 
-    public Color(String name, String imageUrl) {
-        this.name = name;
+    public ProductUrl(String type, String imageUrl) {
+        this.type = type;
         this.imageUrl = imageUrl;
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getImageUrl() {
@@ -28,4 +28,5 @@ public class Color {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
 }

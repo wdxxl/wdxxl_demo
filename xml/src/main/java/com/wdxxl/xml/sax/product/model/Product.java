@@ -3,36 +3,21 @@ package com.wdxxl.xml.sax.product.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alibaba.fastjson.annotation.JSONField;
 
 public class Product {
-    @JSONField(ordinal = 1, name = "Retailer")
     private String retailer;
-    @JSONField(ordinal = 2, name = "ProductId")
     private String productId;
-    @JSONField(ordinal = 3, name = "Name")
     private String name;
-    @JSONField(ordinal = 4, name = "Brand")
     private String brand;
-    @JSONField(ordinal = 5, name = "Price")
     private String price;
-    @JSONField(ordinal = 6, name = "Description")
     private String description;
-    @JSONField(ordinal = 7, name = "ProductURL")
-    private List<ProductURL> productURL;
-    @JSONField(ordinal = 8, name = "ImageURL")
-    private String imageURL;
-    @JSONField(ordinal = 9, name = "AlternateImages")
-    private AlternateImages alternateImages;
-    @JSONField(ordinal = 10, name = "Categories")
-    private List<Category> categories;
-    @JSONField(ordinal = 11, name = "Sizes")
+    private List<ProductUrl> productUrl;
+    private String imageUrl;
+    private List<String> alternateImages;
+    private List<String> categories;
     private List<String> size;
-    @JSONField(ordinal = 12, name = "Color")
     private List<Color> color;
-    @JSONField(ordinal = 13, name = "InStock")
     private List<InStock> inStock;
-    @JSONField(ordinal = 14, name = "Time")
     private String time;
 
     public String getRetailer() {
@@ -83,50 +68,57 @@ public class Product {
         this.description = description;
     }
 
-    public List<ProductURL> getProductURL() {
-        return productURL;
+    public List<ProductUrl> getProductUrl() {
+        return productUrl;
     }
 
-    public void setProductURL(List<ProductURL> productURL) {
-        this.productURL = productURL;
+    public void setProductUrl(List<ProductUrl> productUrl) {
+        this.productUrl = productUrl;
     }
 
-    public void appendProductURL(ProductURL productURL) {
-        if (this.productURL == null) {
-            this.productURL = new ArrayList<>();
+    public void appendProductUrl(ProductUrl productUrl) {
+        if (this.productUrl == null) {
+            this.productUrl = new ArrayList<>();
         }
-        this.productURL.add(productURL);
+        this.productUrl.add(productUrl);
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public AlternateImages getAlternateImages() {
+    public List<String> getAlternateImages() {
         return alternateImages;
     }
 
-    public void setAlternateImages(AlternateImages alternateImages) {
+    public void setAlternateImages(List<String> alternateImages) {
         this.alternateImages = alternateImages;
     }
 
-    public List<Category> getCategories() {
+    public void appendAlternateImages(List<String> imageUrls) {
+        if (alternateImages == null) {
+            alternateImages = new ArrayList<>();
+        }
+        alternateImages.addAll(imageUrls);
+    }
+
+    public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
-    public void appendCategory(Category category) {
-        if (categories == null) {
-            categories = new ArrayList<>();
+    public void appendCategory(List<String> categories) {
+        if (this.categories == null) {
+            this.categories = new ArrayList<>();
         }
-        categories.add(category);
+        this.categories.addAll(categories);
     }
 
     public List<String> getSize() {
@@ -163,7 +155,7 @@ public class Product {
         if (colorName != null && color != null) {
             for (int i = 0; i < color.size(); i++) {
                 if (colorName.equals(color.get(i).getName())) {
-                    return color.get(i).getImageURL();
+                    return color.get(i).getImageUrl();
                 }
             }
         }

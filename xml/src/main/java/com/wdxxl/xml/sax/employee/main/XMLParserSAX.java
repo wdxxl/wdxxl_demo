@@ -19,7 +19,8 @@ public class XMLParserSAX {
         try {
             SAXParser saxParser = saxParserFactory.newSAXParser();
             SaxEmployeeHandler handler = new SaxEmployeeHandler();
-            saxParser.parse(new File(System.getProperty("user.dir") + "/lib/employees.xml"),
+            saxParser.parse(new File(System.getProperty("user.dir")
+                    + "/src/test/resources/employees.xml"),
                     handler);
             // Get Employees list
             List<Employee> empList = handler.getEmpList();

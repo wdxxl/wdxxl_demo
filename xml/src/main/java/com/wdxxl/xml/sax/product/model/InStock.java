@@ -1,23 +1,16 @@
 package com.wdxxl.xml.sax.product.model;
 
-import com.alibaba.fastjson.annotation.JSONField;
 
 public class InStock {
-    @JSONField(ordinal = 1, name = "SKU")
     private String sku;
-    @JSONField(ordinal = 2, name = "Size")
     private String size;
-    @JSONField(ordinal = 3, name = "Color")
     private String color;
-    @JSONField(ordinal = 4, name = "Price")
     private String price;
 
     public InStock() {
-        super();
     }
 
     public InStock(String sku, String size, String color, String price) {
-        super();
         this.sku = sku;
         this.size = size;
         this.color = color;
@@ -55,4 +48,5 @@ public class InStock {
     public void setPrice(String price) {
         this.price = price;
     }
+
 }

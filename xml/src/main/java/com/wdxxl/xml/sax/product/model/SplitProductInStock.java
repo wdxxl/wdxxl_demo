@@ -2,44 +2,27 @@ package com.wdxxl.xml.sax.product.model;
 
 import java.util.List;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SplitProductInStock {
-    @JSONField(ordinal = 1, name = "product_id")
+    @JsonProperty("product_id")
     private String productId;
-    @JSONField(ordinal = 2, name = "retailer")
     private String retailer;
-    @JSONField(ordinal = 3, name = "name")
     private String name;
-    @JSONField(ordinal = 4, name = "brand")
     private String brand;
-    @JSONField(ordinal = 5, name = "Price")
     private String price;
-    @JSONField(ordinal = 6, name = "description")
     private String description;
-    @JSONField(ordinal = 7, name = "productURL")
-    private List<ProductURL> productURL;
-    @JSONField(ordinal = 8, name = "imageURL")
-    private String imageURL;
-    @JSONField(ordinal = 9, name = "alternateImages")
-    private AlternateImages alternateImages;
-    @JSONField(ordinal = 10, name = "categories")
-    private List<Category> categories;
-    @JSONField(ordinal = 11, name = "sizes")
+    private List<ProductUrl> productUrl;
+    private String imageUrl;
+    private List<String> alternateImages;
+    private List<String> categories;
     private List<String> size;
-    @JSONField(ordinal = 12, name = "product_color")
     private String productColor;
-    @JSONField(ordinal = 13, name = "color_imageURL")
-    private String colorImageURL;
-    @JSONField(ordinal = 14, name = "SKU")
+    private String colorImageUrl;
     private String sku;
-    @JSONField(ordinal = 15, name = "instock_size")
     private String inStockSize;
-    @JSONField(ordinal = 16, name = "instock_color")
     private String inStockColor;
-    @JSONField(ordinal = 17, name = "instock_price")
     private String inStockPrice;
-    @JSONField(ordinal = 18, name = "time")
     private String time;
 
     public SplitProductInStock() {
@@ -94,35 +77,35 @@ public class SplitProductInStock {
         this.description = description;
     }
 
-    public List<ProductURL> getProductURL() {
-        return productURL;
+    public List<ProductUrl> getProductUrl() {
+        return productUrl;
     }
 
-    public void setProductURL(List<ProductURL> productURL) {
-        this.productURL = productURL;
+    public void setProductUrl(List<ProductUrl> productUrl) {
+        this.productUrl = productUrl;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public AlternateImages getAlternateImages() {
+    public List<String> getAlternateImages() {
         return alternateImages;
     }
 
-    public void setAlternateImages(AlternateImages alternateImages) {
+    public void setAlternateImages(List<String> alternateImages) {
         this.alternateImages = alternateImages;
     }
 
-    public List<Category> getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
@@ -142,12 +125,12 @@ public class SplitProductInStock {
         this.productColor = productColor;
     }
 
-    public String getColorImageURL() {
-        return colorImageURL;
+    public String getColorImageUrl() {
+        return colorImageUrl;
     }
 
-    public void setColorImageURL(String colorImageURL) {
-        this.colorImageURL = colorImageURL;
+    public void setColorImageUrl(String colorImageUrl) {
+        this.colorImageUrl = colorImageUrl;
     }
 
     public String getSku() {
