@@ -1,0 +1,13 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+repositories{
+    mavenCentral()
+}
+
+dependencies{
+    compile 'junit:junit:4.11'
+    compile 'com.h2database:h2:1.4.190'
+}
+
