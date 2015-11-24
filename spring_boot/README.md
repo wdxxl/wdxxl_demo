@@ -20,5 +20,15 @@
 ###4. Web Jsp page
 ####http://localhost:8080/hello
 
+###5. banner.txt
+
+###6. Restful User examples
+####DEFAULT -- http://localhost:8080/users/1 (GET)
+####GET     -- http://localhost:8080/users/1/customers
+####POST    -- http://localhost:8080/users/createUser (Content-Type:application/json) ({"id":1,"name":"king"}) 
+####PUT     -- http://localhost:8080/users/modifyUser (same as POST)
+####PATCH   -- http://localhost:8080/users/patchUser (same as PUT)
+####DELETE  -- http://localhost:8080/users/1
+
 ###Tips 1: Application Should Stay In Parent Package
 ###Tips 2: webapp under folder of src/main
