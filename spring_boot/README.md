@@ -14,8 +14,8 @@
 ###2. Unit Test
 ####GreetingControllerTest.java
 
-###3. public web access
-####http://localhost:8080/index.html
+###3. static web access
+####http://localhost:8080/public/index.html
 
 ###4. Web Jsp page
 ####http://localhost:8080/hello
