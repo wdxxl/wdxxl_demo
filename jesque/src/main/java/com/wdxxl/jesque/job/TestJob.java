@@ -1,6 +1,4 @@
-package com.wdxxl.jesque;
-
-import java.util.Date;
+package com.wdxxl.jesque.job;
 
 public class TestJob implements Runnable {
     final String arg1;
@@ -13,7 +11,7 @@ public class TestJob implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(
-                "Job ran at=" + new Date() + ", with arg1 = " + arg1 + ", and arg2= " + arg2);
+        System.out.println("TestJob [arg1=" + arg1 + ", arg2=" + arg2 + "]");
     }
+
 }

@@ -2,6 +2,8 @@ package com.wdxxl.jesque;
 
 import java.util.Arrays;
 
+import com.wdxxl.jesque.job.TestJob;
+
 import net.greghaines.jesque.Config;
 import net.greghaines.jesque.ConfigBuilder;
 import net.greghaines.jesque.Job;
@@ -24,7 +26,7 @@ public class RecurringJobs {
         final Client client = new ClientPoolImpl(config, new JedisPool("localhost"));
         long delay = 10;// seconds
         long future = System.currentTimeMillis() + (delay * 1000);// future timestamp
-        long frequency = 60; // seconds
+        long frequency = 6; // seconds
         // Enqueue job
         client.recurringEnqueue(QUEUE,
                 new Job(TestJob.class.getSimpleName(), new Object[] {"Hello", "World"}), // arguments
@@ -38,7 +40,7 @@ public class RecurringJobs {
         workerThread.start();
         // Wait a few secs then shutdown
         try {
-            Thread.sleep((delay * 10000) + 50000);
+            Thread.sleep(50000);
         } catch (Exception e) {
         }
         // Give ourselves time to process

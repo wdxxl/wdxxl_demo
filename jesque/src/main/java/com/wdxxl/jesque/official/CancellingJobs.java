@@ -1,4 +1,4 @@
-package com.wdxxl.jesque;
+package com.wdxxl.jesque.official;
 
 import java.util.Arrays;
 
@@ -15,22 +15,24 @@ import net.greghaines.jesque.worker.Worker;
 import net.greghaines.jesque.worker.WorkerImpl;
 import redis.clients.jedis.JedisPool;
 
-public class DelayedJobs {
+public class CancellingJobs {
     public static void main(String[] args) {
         // Queue Name
-        final String QUEUE = "fooDelayed";
+        final String QUEUE = "fooRecurring";
         // Configuration
         final Config config =
                 new ConfigBuilder().withHost("localhost").withPort(6379).withDatabase(0).build();
-        // Client
+        // ClientPool
         final Client client = new ClientPoolImpl(config, new JedisPool("localhost"));
+
         long delay = 10;// seconds
         long future = System.currentTimeMillis() + (delay * 1000);// future timestamp
+        long frequency = 6; // seconds
         // Enqueue job
         Job job = new Job(TestJob.class.getSimpleName(), new Object[] {"Hello", "World"});
-        client.delayedEnqueue(QUEUE,
+        client.recurringEnqueue(QUEUE,
                 job, // arguments
-                future);
+                future, (frequency * 1000));
         // End
         client.end();
         // Start a worker to run jobs from the queues
@@ -39,11 +41,17 @@ public class DelayedJobs {
         final Thread workerThread = new Thread(worker);
         workerThread.start();
         // Wait a few secs then shutdown
-        try {Thread.sleep(5000);} catch (Exception e) {}
-        client.removeDelayedEnqueue(QUEUE, job);
-        try {Thread.sleep(7000);} catch (Exception e) {}
+        try {Thread.sleep(25000);} catch (Exception e) {}
+        // Recurring jobs can be cancelled
+        client.removeRecurringEnqueue(QUEUE, job);
+        // Wait a few secs then shutdown
+        try {Thread.sleep(25000);} catch (Exception e) {}
         // Give ourselves time to process
         worker.end(true);
-        try {workerThread.join();} catch (Exception e) {e.printStackTrace();}
+        try {
+            workerThread.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
