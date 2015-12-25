@@ -8,4 +8,7 @@ repositories{
 dependencies {
     compile 'junit:junit:4.11'
     compile 'org.apache.lucene:lucene-core:3.5.0'
+    compile 'org.apache.lucene:lucene-snowball:3.0.3'
+    compile 'com.chenlb.mmseg4j:mmseg4j-core:1.8.6'
+    compile 'com.chenlb.mmseg4j:mmseg4j-analysis:1.8.6'
 }
