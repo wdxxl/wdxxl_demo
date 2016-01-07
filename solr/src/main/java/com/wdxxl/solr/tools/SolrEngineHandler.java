@@ -106,4 +106,78 @@ public class SolrEngineHandler {
         // 填充page对象
         return new Page<T>(pageNum, pageSize, totalRow, items);
     }
+
+    /**
+     * 根据id从索引中删除记录[测试通过]
+     *
+     * @param server
+     * @param idName 主键名
+     * @param id 主键值
+     */
+    public static void deleteById(SolrServer server, String idName, Object id) {
+        try {
+            server.deleteByQuery(idName + ":" + id.toString());
+            server.commit(false, false);
+            LOG.info("Delete from index by id " + id + " finished. operate param is: " + idName
+                    + ":" + id.toString());
+        } catch (Exception e) {
+            LOG.info("Delete from index by id " + id + " error, " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 根据id集合从索引中删除记录[测试通过]
+     *
+     * @param server
+     * @param idName 主键名
+     * @param ids 主键值
+     */
+    public static <T> void deleteByIds(SolrServer server, String idName, List<T> ids) {
+        try {
+            if (ids.size() > 0) {
+                StringBuffer query = new StringBuffer(idName + ":" + ids.get(0));
+                for (int i = 1; i < ids.size(); i++) {
+                    if (null != ids.get(i)) {
+                        query.append(" OR " + idName + ":" + ids.get(i));
+                    }
+                }
+                server.deleteByQuery(query.toString());
+                server.commit(false, false);
+                LOG.info("Delete from index by id list " + ids + " finished.");
+            } else {
+                LOG.info("Delete ids list is null.");
+            }
+        } catch (Exception e) {
+            LOG.info("Delete from index by id " + ids + " error, " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 根据查询从索引中删除[测试通过]
+     * @param server
+     * @param query
+     */
+    public static void deleteByQuery(SolrServer server, String query) {
+        try {
+            server.deleteByQuery(query);
+            server.commit(false, false);
+            LOG.info("Delete from index by query string " + query + " finished.");
+        } catch (Exception e) {
+            LOG.info("Delete from index by query string " + query + " error, " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 根据查询从索引中删除[测试通过]
+     * @param server
+     */
+    public static void deleteAll(SolrServer server) {
+        try {
+            server.deleteByQuery("*:*");
+            server.commit(false, false);
+            LOG.info("All index delete finished.");
+        } catch (Exception e) {
+            LOG.info("Delete all index error." + e.getMessage(), e);
+        }
+    }
 }
