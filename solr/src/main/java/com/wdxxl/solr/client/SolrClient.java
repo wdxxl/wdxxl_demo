@@ -10,6 +10,15 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 
 public class SolrClient {
+    public enum URL {
+        Local("http://localhost:8983/solr");
+
+        public final String urlAddress;
+
+        private URL(String urlAddress) {
+            this.urlAddress = urlAddress;
+        }
+    }
     private static Map<String, SolrServer> solrServerMap =
             Collections.synchronizedMap(new HashMap<String, SolrServer>());
 

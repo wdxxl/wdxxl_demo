@@ -10,21 +10,19 @@ import org.junit.Test;
 
 public class AnnotationQuery {
     @Test
-    public void testQueryBeanReturn2() {
-        String solrUrl = "http://localhost:8983/solr";
-        SolrServer server = SolrClient.getHttpSolrServer(solrUrl);
-        Page<Article> page = SolrEngineHandler.queryBean(server, "柳梦璃", 1, 10, Article.class);
+    public void testQueryBeanReturnMore() {
+        SolrServer server = SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress);
+        Page<Article> page = SolrEngineHandler.queryBean(server, "不", 1, 10, Article.class);
         for (Article article : page.getDatas()) {
             System.out.println(article.toString());
         }
     }
 
     @Test
-    public void testQueryBeanReturn1() {
-        String solrUrl = "http://localhost:8983/solr";
-        SolrServer server = SolrClient.getHttpSolrServer(solrUrl);
+    public void testQueryBeanReturnOne() {
+        SolrServer server = SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress);
         Page<Article> page =
-                SolrEngineHandler.queryBean(server, "author:柳梦璃", 1, 10, Article.class);
+                SolrEngineHandler.queryBean(server, "author:'春晓 孟浩然'", 1, 10, Article.class);
         for (Article article : page.getDatas()) {
             System.out.println(article.toString());
         }
@@ -32,9 +30,8 @@ public class AnnotationQuery {
 
     @Test
     public void testQueryBinderBean() {
-        String solrUrl = "http://localhost:8983/solr";
-        SolrServer server = SolrClient.getHttpSolrServer(solrUrl);
-        Page<Article> page = SolrEngineHandler.queryBinderBean(server, "苏若年", 1, 10, Article.class);
+        SolrServer server = SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress);
+        Page<Article> page = SolrEngineHandler.queryBinderBean(server, "王之涣", 1, 10, Article.class);
         for (Article article : page.getDatas()) {
             System.out.println(article.toString());
         }

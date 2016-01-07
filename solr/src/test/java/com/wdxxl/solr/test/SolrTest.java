@@ -11,8 +11,7 @@ public class SolrTest {
 
     @Before
     public void init() {
-        String solrUrl = "http://localhost:8983/solr";
-        server = SolrClient.getHttpSolrServer(solrUrl);
+        server = SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress);
     }
 
     @Test

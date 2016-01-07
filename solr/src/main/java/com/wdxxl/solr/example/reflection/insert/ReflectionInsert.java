@@ -1,10 +1,9 @@
-package com.wdxxl.solr.example.insert;
+package com.wdxxl.solr.example.reflection.insert;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import com.wdxxl.solr.client.SolrClient;
 import com.wdxxl.solr.model.Article;
@@ -14,8 +13,8 @@ import org.apache.solr.common.SolrInputDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReflectionEntityConvert {
-    public static final Logger LOG = LoggerFactory.getLogger(ReflectionEntityConvert.class);
+public class ReflectionInsert {
+    public static final Logger LOG = LoggerFactory.getLogger(ReflectionInsert.class);
 
     /**
      * 实体类与SolrInputDocument转换
@@ -54,7 +53,7 @@ public class ReflectionEntityConvert {
      */
     public static void addConvertBean(SolrServer server, Article lists) {
         try {
-            server.add(ReflectionEntityConvert.entity2SolrInputDocument(lists));
+            server.add(ReflectionInsert.entity2SolrInputDocument(lists));
             server.commit(false, false);
             LOG.info("Add convert object list to index finished. ");
         } catch (Exception e) {
@@ -71,13 +70,12 @@ public class ReflectionEntityConvert {
 
     public static void main(String[] args) {
         Article article = new Article();
-        article.setId(UUID.randomUUID().toString());
+        article.setId("29");
         List<String> atlts1 = new ArrayList<String>();
-        atlts1.add("谁言别后终无悔，寒月清宵绮梦回");
-        atlts1.add("深知身在情长在，前尘不共彩云飞");
+        atlts1.add("千山鸟飞绝，万径人踪灭");
+        atlts1.add("孤舟蓑笠翁，独钓寒江雪");
         article.setTitle(atlts1);
-        article.setAuthor("柳梦璃");
-        String solrUrl = "http://localhost:8983/solr";
-        addConvertBean(SolrClient.getHttpSolrServer(solrUrl), article);
+        article.setAuthor("江雪 柳宗元");
+        addConvertBean(SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress), article);
     }
 }

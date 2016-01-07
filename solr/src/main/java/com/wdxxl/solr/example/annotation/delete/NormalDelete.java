@@ -12,34 +12,29 @@ import org.junit.Test;
 public class NormalDelete {
     @Test
     public void testDeleteById() {
-        String solrUrl = "http://localhost:8983/solr";
-        SolrServer server = SolrClient.getHttpSolrServer(solrUrl);
-        SolrEngineHandler.deleteById(server, "id",
-                new String("9589e70b-9ce6-43a7-aa9c-835e2be7765f"));
+        SolrServer server = SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress);
+        SolrEngineHandler.deleteById(server, "id", "1");
     }
 
     @Test
     public void testDeleteByIds() {
-        String solrUrl = "http://localhost:8983/solr";
-        SolrServer server = SolrClient.getHttpSolrServer(solrUrl);
+        SolrServer server = SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress);
         List<String> ids = new ArrayList<>();
-        ids.add("354e718f-845b-4b20-a1a3-ccd6aa8f774e");
-        ids.add("c887b621-a3e0-4824-9632-3fda37b3b734");
+        ids.add("8");
+        ids.add("19");
         SolrEngineHandler.deleteByIds(server, "id", ids);
     }
 
     @Test
     public void testDeleteByQuery() {
-        String solrUrl = "http://localhost:8983/solr";
-        SolrServer server = SolrClient.getHttpSolrServer(solrUrl);
+        SolrServer server = SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress);
         String query = "author:\"凉州词 王之涣\"";
         SolrEngineHandler.deleteByQuery(server, query);
     }
 
     @Test
     public void testDeleteAll() {
-        String solrUrl = "http://localhost:8983/solr";
-        SolrServer server = SolrClient.getHttpSolrServer(solrUrl);
+        SolrServer server = SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress);
         SolrEngineHandler.deleteAll(server);
     }
 

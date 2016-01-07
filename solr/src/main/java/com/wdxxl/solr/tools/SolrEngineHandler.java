@@ -109,7 +109,6 @@ public class SolrEngineHandler {
 
     /**
      * 根据id从索引中删除记录[测试通过]
-     *
      * @param server
      * @param idName 主键名
      * @param id 主键值
@@ -127,7 +126,6 @@ public class SolrEngineHandler {
 
     /**
      * 根据id集合从索引中删除记录[测试通过]
-     *
      * @param server
      * @param idName 主键名
      * @param ids 主键值
