@@ -64,7 +64,7 @@ public class ReflectionInsert {
     /**
      * 跟进属性xx构造对应的getXx()方法
      */
-    private static String dynamicMethodName(String src, String get) {
+    public static String dynamicMethodName(String src, String get) {
         return get + new String(src.charAt(0) + "").toUpperCase() + src.substring(1);
     }
 
