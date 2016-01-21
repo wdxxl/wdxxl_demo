@@ -78,4 +78,14 @@ public class NormalHighLight {
             System.out.println(article.toString());
         }
     }
+
+    @Test
+    public void testQueryHihhLight2() {
+        SolrServer server = SolrClient.getHttpSolrServer(SolrClient.URL.Local.urlAddress);
+        Page<Article> page =
+                NormalHighLight.QueryHighLight(server, "text:手机", 1, 10, Article.class);
+        for (Article article : page.getDatas()) {
+            System.out.println(article.toString());
+        }
+    }
 }

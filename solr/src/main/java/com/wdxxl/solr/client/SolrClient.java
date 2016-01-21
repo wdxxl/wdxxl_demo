@@ -11,7 +11,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 
 public class SolrClient {
     public enum URL {
-        Local("http://localhost:8983/solr");
+        Local("http://localhost:8983/solr/tang-poetry");
 
         public final String urlAddress;
 
