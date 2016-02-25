@@ -17,4 +17,6 @@ include 'jesque'
 include 'restful_client'
 include 'solr'
 include 'geoip'
+include 'spring_cloud_consul'
+
 
