@@ -16,3 +16,5 @@ include 'jsoup'
 include 'jesque'
 include 'restful_client'
 include 'solr'
+include 'geoip'
+

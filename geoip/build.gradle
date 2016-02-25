@@ -1,0 +1,10 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories{
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.maxmind.geoip:geoip-api:1.2.14'
+}
