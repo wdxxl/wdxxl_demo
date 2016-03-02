@@ -18,5 +18,4 @@ include 'restful_client'
 include 'solr'
 include 'geoip'
 include 'spring_cloud_consul'
-
-
+include 'i18n'
