@@ -1,0 +1,11 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories{
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.apache.lucene:lucene-core:4.4.0'
+    compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '4.4.0'
+}
