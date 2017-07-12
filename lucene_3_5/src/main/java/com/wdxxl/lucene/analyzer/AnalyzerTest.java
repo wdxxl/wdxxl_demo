@@ -13,7 +13,7 @@ import org.apache.lucene.util.Version;
 public class AnalyzerTest {
 	public static void main(String[] args) throws IOException {
 		String text1 = "\nRef Product Cross Reference Table A350TRENTXWBA0000000000000PAD\n";
-		text1 ="This is HTML TAG";
+		text1 ="This is HTML TAG Yours your's ad-123 abc_asd";
 		System.out.println("-------------------------");
 		statndardAnalyzer(text1);
 		System.out.println("-------------------------");
