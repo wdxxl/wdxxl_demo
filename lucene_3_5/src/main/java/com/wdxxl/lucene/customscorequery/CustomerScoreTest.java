@@ -48,7 +48,8 @@ public class CustomerScoreTest {
             // FuzzyQuery query = new FuzzyQuery(new Term("content", "lik*"),0.4f,0); //Query content:lik*~0.4 does not implement createWeight 
     		
             WdxxlCustomScoreQuery scoreQuery = new WdxxlCustomScoreQuery(query);
-            TopDocs tds = searcher.search(scoreQuery.createWeight(searcher), null, 20);//使用自定义的query
+            TopDocs tds = searcher.search(scoreQuery, 20); // this also works
+            //TopDocs tds = searcher.search(scoreQuery.createWeight(searcher), null, 20);//使用自定义的query
             System.out.println("TotalHits: " + tds.totalHits);
             for (ScoreDoc sd : tds.scoreDocs) {
 				Document doc = searcher.doc(sd.doc);

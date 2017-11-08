@@ -25,6 +25,7 @@ public class WdxxlCustomScoreProvider extends CustomScoreProvider {
 		// 这是按评分的降序排，之前默认的是subQueryScore * valSrcScore
 		// return subQueryScore / valSrcScore;
 		// return subQueryScore * valSrcScore;
+		 float realScore =  subQueryScore * valSrcScore;
 		 TermFreqVector freqVector = thisReader.getTermFreqVector(doc, "content");
          int freqs[] = freqVector.getTermFrequencies();
          Set<Term> terms = new HashSet<Term>();
@@ -38,7 +39,7 @@ public class WdxxlCustomScoreProvider extends CustomScoreProvider {
                  }
              }
          }
-         return total;
+         return total+realScore;
 	}
 
 }
