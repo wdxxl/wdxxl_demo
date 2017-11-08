@@ -10,11 +10,15 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
@@ -37,24 +41,52 @@ public class CustomerScoreTest {
 
 	public static void main(String[] args) throws ParseException {
 		createIndex();
-		searchByScoreQuery();
+		// searchByScoreQuery();
+		searchByScoreBooleanQuery();
 	}
+	
+	private static void searchByScoreBooleanQuery() throws ParseException{
+        try {
+            IndexSearcher searcher = new IndexSearcher(IndexReader.open(dir));
+            BooleanQuery query = new BooleanQuery();
+            query.add(new TermQuery(new Term("name", "mike")), Occur.SHOULD);
+            query.add(new TermQuery(new Term("content", "football")), Occur.SHOULD);
+            query.add(new TermQuery(new Term("content", "like")), Occur.SHOULD);
+            
+            WdxxlCustomScoreQuery scoreQuery = new WdxxlCustomScoreQuery(query);
+            TopDocs tds = searcher.search(scoreQuery, 3); // this also works
+            //TopDocs tds = searcher.search(scoreQuery.createWeight(searcher), null, 20);//使用自定义的query
+            System.out.println("TotalHits: " + tds.totalHits);
+            for (ScoreDoc sd : tds.scoreDocs) {
+				Document doc = searcher.doc(sd.doc);
+				// sd.score 评分有对应的公式：加权值和文档所出现的次数有关
+                System.out.println("[ DocId - " + sd.doc + ", Score - " + sd.score + ", Hits - " + (int) sd.score +"]" + " email:"
+                        + doc.get("email") + ", name:" + doc.get("name") + ", attach:"
+                        + doc.get("attach") + ", date:" + doc.get("date") + ", content:" + doc.get("content"));
+            }
+            searcher.close();
+        } catch (CorruptIndexException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	private static void searchByScoreQuery() throws ParseException{
         try {
             IndexSearcher searcher = new IndexSearcher(IndexReader.open(dir));
             QueryParser queryParser = new QueryParser(Version.LUCENE_35, "content", new StandardAnalyzer(Version.LUCENE_35));
             Query query = queryParser.parse("like");
-            // FuzzyQuery query = new FuzzyQuery(new Term("content", "lik*"),0.4f,0); //Query content:lik*~0.4 does not implement createWeight 
+            // FuzzyQuery query = new FuzzyQuery(new Term("content", "lik*"),0.4f,0); //Query content:lik*~0.4 does not implement createWeight & not work now
     		
             WdxxlCustomScoreQuery scoreQuery = new WdxxlCustomScoreQuery(query);
-            TopDocs tds = searcher.search(scoreQuery, 20); // this also works
+            TopDocs tds = searcher.search(scoreQuery, 3); // this also works
             //TopDocs tds = searcher.search(scoreQuery.createWeight(searcher), null, 20);//使用自定义的query
             System.out.println("TotalHits: " + tds.totalHits);
             for (ScoreDoc sd : tds.scoreDocs) {
 				Document doc = searcher.doc(sd.doc);
 				// sd.score 评分有对应的公式：加权值和文档所出现的次数有关
-                System.out.println("[ DocId - " + sd.doc + ", Score - " + sd.score + "]" + " email:"
+                System.out.println("[ DocId - " + sd.doc + ", Score - " + sd.score + ", Hits - " + (int) sd.score +"]" + " email:"
                         + doc.get("email") + ", name:" + doc.get("name") + ", attach:"
                         + doc.get("attach") + ", date:" + doc.get("date") + ", content:" + doc.get("content"));
             }
