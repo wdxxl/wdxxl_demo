@@ -57,13 +57,13 @@ public class LuceneGroupingDemo {
 	private void searchGrouping() throws IOException {
 		TermQuery query = new TermQuery(new Term("content", "random"));
 		// 搜索相似度最高的3条记录并且分组
-		int topNGroups = 3; // 前N条中分组 去几个分组
+		int topNGroups = 6; // 前N条中分组 去几个分组
 		int groupOffset = 0; // 分组起始偏移量
 		boolean fillFields = true; // 是否填充SearchGroup的sortValues
 		Sort docSort = Sort.RELEVANCE; // 每个分组内部的排序规则
 		Sort groupSort = docSort;
 		int docOffset = 0; // 用于组内分页，起始的偏移量
-		int docsPerGroup = 2;// 每组返回多少条结果
+		int docsPerGroup = 10;// 每组返回多少条结果
 		boolean requiredTotalGroupCount = true; // 是否需要计算总的组的数量
 		boolean cacheScores = true; // 是否需要缓存评分
 		double maxCacheRAMMB = 16.0; // 第一次查询缓存容量的大小：设置为16M
@@ -160,37 +160,37 @@ public class LuceneGroupingDemo {
 			writer = new IndexWriter(directory, iwc);
 
 			Document doc = new Document();
-			doc.add(new Field("author", "author1", Field.Store.YES, Field.Index.NOT_ANALYZED));
+			doc.add(new Field("author", "WAI NO BLEED AIR ENGINE 1", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			doc.add(new Field("content", "random text", Field.Store.YES, Field.Index.ANALYZED));
 			doc.add(new Field("id", "1", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			writer.addDocument(doc);
 
 			doc = new Document();
-			doc.add(new Field("author", "author1", Field.Store.YES, Field.Index.NOT_ANALYZED));
+			doc.add(new Field("author", "WAI NO BLEED AIR ENGINE 2", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			doc.add(new Field("content", "some more random text", Field.Store.YES, Field.Index.ANALYZED));
 			doc.add(new Field("id", "2", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			writer.addDocument(doc);
 
 			doc = new Document();
-			doc.add(new Field("author", "author1", Field.Store.YES, Field.Index.NOT_ANALYZED));
+			doc.add(new Field("author", "ENGINE ENG1A", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			doc.add(new Field("content", "some more random textual data", Field.Store.YES, Field.Index.ANALYZED));
 			doc.add(new Field("id", "3", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			writer.addDocument(doc);
 
 			doc = new Document();
-			doc.add(new Field("author", "author2", Field.Store.YES, Field.Index.NOT_ANALYZED));
+			doc.add(new Field("author", "ENGINE ENG2A", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			doc.add(new Field("content", "some random text", Field.Store.YES, Field.Index.ANALYZED));
 			doc.add(new Field("id", "4", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			writer.addDocument(doc);
 
 			doc = new Document();
-			doc.add(new Field("author", "author3", Field.Store.YES, Field.Index.NOT_ANALYZED));
+			doc.add(new Field("author", "ENGINE ENG1B", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			doc.add(new Field("content", "some more random text", Field.Store.YES, Field.Index.ANALYZED));
 			doc.add(new Field("id", "5", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			writer.addDocument(doc);
 
 			doc = new Document();
-			doc.add(new Field("author", "author3", Field.Store.YES, Field.Index.NOT_ANALYZED));
+			doc.add(new Field("author", "ENGINE ENG2B", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			doc.add(new Field("content", "random", Field.Store.YES, Field.Index.ANALYZED));
 			doc.add(new Field("id", "6", Field.Store.YES, Field.Index.NOT_ANALYZED));
 			writer.addDocument(doc);
