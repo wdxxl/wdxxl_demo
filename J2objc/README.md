@@ -6,3 +6,9 @@ j2objcc -c HelloAnnotation.m
 j2objcc -o hello HelloAnnotation.o
 ./hello HelloAnnotation
 
+j2objc -use-arc HelloWeakAnnotation.java
+
+
+j2objc -use-arc WeakRefDemo.java
+
+

@@ -1,0 +1,17 @@
+{
+    "id": "ff6a54a6d94f3227b1ad96dad3f44c19",
+    "pps_frmfim_data_type": "fault",
+    "pps_frmfim_fault_code": "251 645 32",
+    "pps_frmfim_fault_descriptions": [
+        "##|all|###Assist handle problem####",
+        "##|all|###Handle (assist) problem####"
+    ],
+    "pps_frmfim_fault_descriptions_str": "[{\"level\":\"none\",\"descver\":\"PRI\",\"keyText\":\"Assist handle problem\",\"faultLoc\":\"first officer&apos;s\"},{\"level\":\"none\",\"descver\":\"ALT1\",\"keyText\":\"Handle (assist) problem\",\"faultLoc\":\"first officer&apos;s\"}]",
+    "pps_frmfim_fault_group_id": "P72E60E854DE1268B6741475CBC25E17",
+    "pps_frmfim_fault_message_description_str": "",
+    "pps_frmfim_fault_refs": "[{\"refInt\":\"25-98 TASK 802\",\"refId\":\"AB3B42B0564345120AAEF9509157E1DB\"}]",
+    "pps_frmfim_fault_type": "observed",
+    "pps_frmfim_library_id": "b7f22896-500f-4c4f-87a1-56d0d51fa426",
+    "pps_frmfim_product_ids": "|all|",
+    "pps_frmfim_publication_id": "96d361f0-bbb7-48cd-bea4-949e881ee3fd"
+}
