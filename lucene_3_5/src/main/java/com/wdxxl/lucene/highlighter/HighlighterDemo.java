@@ -12,9 +12,11 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
@@ -33,7 +35,8 @@ import org.apache.lucene.util.Version;
 public class HighlighterDemo {
 	static Directory dir = new RAMDirectory();
 	static Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_35);
-	static String[] bookNames = { "java开发手册", "深入java开发", "java基础", "程序设计java开发", "java案例精讲", "hadoop项目实例汇总" };
+	static String[] bookNames = { "java enter开发手册 core", "深入java swift core开发", "java core基础", "程序设计java core开发",
+			"java案例精讲", "hadoop项目实例汇总" };
 
 	public static void main(String[] args) throws Exception {
 		index();
@@ -41,17 +44,23 @@ public class HighlighterDemo {
 		System.out.println("共有记录" + topDocs.totalHits + "条");
 		System.out.println("-----------------------------------------------");
 		display(topDocs);
-		System.out.println("-----------------------------------------------");
-		highLightDisplay(topDocs, "java");
+		System.out.println("--------------------TermQuery---------------------------");
+		QueryParser queryParser = new QueryParser(Version.LUCENE_35, "bookName", analyzer);
+		Query query = queryParser.parse("java core");
+		highLightDisplay(topDocs, query);
+		System.out.println("--------------------PhraseQuery-------Exact Match--------------------");
+		PhraseQuery query2 = new PhraseQuery();
+		query2.setSlop(0); // 允许空一个词
+		query2.add(new Term("bookName", "java"));
+		query2.add(new Term("bookName", "core"));
+		highLightDisplay(topDocs, query2);
 	}
 
 	// 把查询到的图书进行显示，并把关键字进行高亮显示
-	public static void highLightDisplay(TopDocs topDocs, String keyWords)
+	public static void highLightDisplay(TopDocs topDocs, Query query)
 			throws CorruptIndexException, IOException, ParseException, InvalidTokenOffsetsException {
 		IndexReader reader = IndexReader.open(dir);
 		IndexSearcher searcher = new IndexSearcher(reader);
-		QueryParser queryParser = new QueryParser(Version.LUCENE_35, "bookName", analyzer);
-		Query query = queryParser.parse(keyWords);
 		ScoreDoc[] scoreDoc = topDocs.scoreDocs;
 
 		SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<font color='red'>", "</font>");
@@ -60,6 +69,7 @@ public class HighlighterDemo {
 		for (int i = 0; i < scoreDoc.length; i++) {
 			Document doc = searcher.doc(scoreDoc[i].doc);
 			String text = doc.get("bookName");
+			System.out.print(text + "----");
 			TokenStream tokenStream = analyzer.tokenStream("bookName", new StringReader(text));
 			String highLightText = highlighter.getBestFragment(tokenStream, text);
 			System.out.println(highLightText);
