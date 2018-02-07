@@ -14,4 +14,5 @@ dependencies {
 
     compile group: 'org.apache.lucene', name: 'lucene-highlighter', version: '3.5.0'
     compile group: 'org.apache.lucene', name: 'lucene-grouping', version: '3.5.0'
+    compile group: 'org.apache.lucene', name: 'lucene-spellchecker', version: '3.5.0'
 }
