@@ -7,6 +7,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.NumericField;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
@@ -74,7 +75,7 @@ public class IndexMergeDemo {
 		ScoreDoc[] scoreDoc = topDocs.scoreDocs;
 		for (int i = 0; i < scoreDoc.length; i++) {
 			Document doc = searcher.doc(scoreDoc[i].doc);
-			System.out.println("BookNames: " + doc.get("BookNames") + ", DeleteFlags: " + doc.get("DeleteFlags"));
+			System.out.println("ID: " + doc.get("id") + ", BookNames: " + doc.get("BookNames") + ", DeleteFlags: " + doc.get("DeleteFlags"));
 		}
 		searcher.close();
 	}
@@ -83,14 +84,15 @@ public class IndexMergeDemo {
 	public static void index(Directory dir, String deleteFlag)
 			throws CorruptIndexException, LockObtainFailedException, IOException {
 		IndexWriter writer = new IndexWriter(dir, new IndexWriterConfig(Version.LUCENE_35, analyzer));
-		for (int j = 0; j < 100000; j++) {// // Integer.MAX_VALUE
+		//for (int j = 0; j < 100000; j++) {// // Integer.MAX_VALUE
 			for (int i = 0; i < BookNames.length; i++) {
 				Document doc = new Document();
+				doc.add(new NumericField("id", Field.Store.YES, true).setIntValue(i));
 				doc.add(new Field("BookNames", BookNames[i], Field.Store.YES, Field.Index.ANALYZED));
 				doc.add(new Field("DeleteFlags", deleteFlag, Field.Store.YES, Field.Index.ANALYZED));
 				writer.addDocument(doc);
 			}
-		}
+		//}
 		writer.close();
 	}
 	/**
