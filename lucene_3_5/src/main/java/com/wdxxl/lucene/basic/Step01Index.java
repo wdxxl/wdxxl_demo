@@ -19,11 +19,11 @@ import org.apache.lucene.util.Version;
 public class Step01Index {
 
     /**
-     * Steps for index method. 
-     * 1. Create Directory 
-     * 2. Create IndexWriter 
-     * 3. Create Document 
-     * 4. Add Field to Document 
+     * Steps for index method.
+     * 1. Create Directory
+     * 2. Create IndexWriter
+     * 3. Create Document
+     * 4. Add Field to Document
      * 5. IndexWriter add the document to Lucene Index
      */
     public static void main(String[] args) {

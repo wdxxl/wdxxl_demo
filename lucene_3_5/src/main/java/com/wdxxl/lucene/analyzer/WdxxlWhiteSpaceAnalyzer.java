@@ -14,8 +14,8 @@ public class WdxxlWhiteSpaceAnalyzer extends Analyzer {
 	@Override
 	public TokenStream tokenStream(String fieldName, Reader reader) {
 		final WhitespaceTokenizer tokenizer = new WhitespaceTokenizer(Version.LUCENE_35, reader);
-		TokenStream tokenStream = new WdxxlPatternReplaceFilter(tokenizer, Pattern.compile("[\\p{Punct}]"), "", true);
-	    tokenStream = new LowerCaseFilter(Version.LUCENE_35, tokenizer);
+		TokenStream tokenStream = new WdxxlPatternReplaceFilter(tokenizer, Pattern.compile("[\\p{Punct}]"), "", true); //标点符号
+	    tokenStream = new LowerCaseFilter(Version.LUCENE_35, tokenStream);
 		return tokenStream;
 	}
 

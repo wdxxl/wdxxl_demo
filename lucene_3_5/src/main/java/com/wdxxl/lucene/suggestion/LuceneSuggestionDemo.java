@@ -1,6 +1,5 @@
 package com.wdxxl.lucene.suggestion;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +29,7 @@ import org.apache.lucene.util.Version;
 public class LuceneSuggestionDemo {
 	static Directory SOURCES_DIR = new RAMDirectory();
 	static Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_35);
-	static String[] BookNames = { "engine/pylon java core", "pylon java swift core", "engine\\pylon core basic",
+	static String[] BookNames = { "engine/pylon java core", "pylon java swift core</z>", "engine\\pylon core basic",
 			"java engine@pylon", "java tutorial 11-12-13" };
 	static String[] DeleteFlags = { "false", "false", "false", "false", "false" };
 
@@ -39,7 +38,9 @@ public class LuceneSuggestionDemo {
 		System.out.println("-------------------SOURCES_DIR-------Case_1-----------------");
 		display(SOURCES_DIR, searcher(SOURCES_DIR, "BookNames", "pylon"));
 		System.out.println("-------------------SOURCES_DIR------Case_2------------------");
-		display(SOURCES_DIR, searcher(SOURCES_DIR, "BookNames", "11-"));
+		display(SOURCES_DIR, searcher(SOURCES_DIR, "BookNames", "11-12-13"));
+		System.out.println("-------------------SOURCES_DIR------Case_3------------------");
+		display(SOURCES_DIR, searcher(SOURCES_DIR, "BookNames", "z"));
 		System.out.println("-------------------Suggestion------------------------");
 		getSuggestion("pyl", 5);
 	}
