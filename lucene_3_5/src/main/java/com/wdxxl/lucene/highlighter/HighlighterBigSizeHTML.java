@@ -26,6 +26,7 @@ import org.apache.lucene.search.highlight.Highlighter;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.apache.lucene.search.highlight.NullFragmenter;
 import org.apache.lucene.search.highlight.QueryScorer;
+import org.apache.lucene.search.highlight.SimpleFragmenter;
 import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.LockObtainFailedException;
@@ -39,21 +40,21 @@ import com.google.gson.JsonObject;
 public class HighlighterBigSizeHTML {
 	static Directory dir = new RAMDirectory();
 	static Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_35);
-	static String[] bookNames = { "./lib/highlighter/FALTCHAP-28.json" };
+	static String[] bookNames = { "./lib/highlighter/FALTCHAP-27.json" };
+	//static String[] bookNames = { "./lib/highlighter/FALTCHAP-28.json" };
 
 	public static void main(String[] args) throws IOException, ParseException, InvalidTokenOffsetsException {
 		index();
 		// partially boxed~0 - 218
 		System.out.println("--------------------PhraseQuery-------Exact Match 1--------------------");
-		TopDocs topDocs = searcher("bookName", "fuel");// partially
+		TopDocs topDocs = searcher("bookName", "partially");// 27: partially 28:fuel
 		PhraseQuery query = new PhraseQuery();
 		query.setSlop(3); // 允许空一个词
-		query.add(new Term("bookName", "fuel")); // partially
-		query.add(new Term("bookName", "leak")); // boxed
+		query.add(new Term("bookName", "partially")); // 27: partially 28:fuel
+		query.add(new Term("bookName", "boxed")); // 27: boxed 28:leak
 		highLightDisplay(topDocs, query);
 	}
 
-	// 按照关键字查询图书
 	public static TopDocs searcher(String fieldName, String keyWords)
 			throws CorruptIndexException, IOException, ParseException {
 		IndexReader reader = IndexReader.open(dir);
@@ -65,7 +66,6 @@ public class HighlighterBigSizeHTML {
 		return topDocs;
 	}
 
-	// 把查询到的图书进行显示，并把关键字进行高亮显示
 	public static void highLightDisplay(TopDocs topDocs, Query query)
 			throws CorruptIndexException, IOException, ParseException, InvalidTokenOffsetsException {
 		IndexReader reader = IndexReader.open(dir);
@@ -74,9 +74,10 @@ public class HighlighterBigSizeHTML {
 
 		SimpleHTMLFormatter simpleHTMLFormatter = new SimpleHTMLFormatter("<font color='red'>", "</font>");
 		Highlighter highlighter = new Highlighter(simpleHTMLFormatter, new QueryScorer(query));
-		// highlighter.setTextFragmenter(new SimpleFragmenter(1024)); //52KB
-		highlighter.setTextFragmenter(new NullFragmenter()); //52KB
-		// highlighter.setTextFragmenter(new WdxxlFragmenter(Long.MAX_VALUE));
+		highlighter.setMaxDocCharsToAnalyze(2 * 1024 * 1024);  // DEFAULT_MAX_CHARS_TO_ANALYZE = 50*1024; //50KB
+		//highlighter.setMaxDocCharsToAnalyze(-1); //this not work same logical like solr: hl.maxAnalyzedChars=-1
+		highlighter.setTextFragmenter(new SimpleFragmenter(1024)); // 52KB (1024 = 1K)
+		highlighter.setTextFragmenter(new NullFragmenter());
 		for (int i = 0; i < scoreDoc.length; i++) {
 			Document doc = searcher.doc(scoreDoc[i].doc);
 			String text = doc.get("bookName");
