@@ -3,6 +3,8 @@ package com.wdxxl.lucene.highlighter;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
@@ -82,10 +84,12 @@ public class HighlighterBigSizeHTML {
 			Document doc = searcher.doc(scoreDoc[i].doc);
 			String text = doc.get("bookName");
 			// System.out.print(text + "----");
-			TokenStream tokenStream = analyzer.tokenStream("bookName", new StringReader(text));
-			String highLightText = highlighter.getBestFragment(tokenStream, text);
+			// TokenStream tokenStream = analyzer.tokenStream("bookName", new StringReader(text));
+			// String highLightText = highlighter.getBestFragment(tokenStream, text);
+			 String highLightText = highlighter.getBestFragment(analyzer, "bookName", text); // recommand to use this
 			// System.out.println(highLightText);
 			writeToHTMLFiles(bookNames[0] + ".after.html", highLightText);
+			countHighlighter(highLightText);
 		}
 		searcher.close();
 	}
@@ -118,6 +122,19 @@ public class HighlighterBigSizeHTML {
 		JsonElement content = jsonObject.get("content");
 		writeToHTMLFiles(bookNames[0] + ".before.html", content.toString());
 		return content.toString();
+	}
+
+	public static int countHighlighter(String content){
+		String regex = "(<font color='red'>.*?</font>)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        int count = 0;
+        while (matcher.find()) {
+        	count++;
+            // System.out.println(matcher.group(1));
+        }
+        System.out.println(count);
+        return count;
 	}
 
 	public static void writeToHTMLFiles(String fileName, String data) throws IOException {
