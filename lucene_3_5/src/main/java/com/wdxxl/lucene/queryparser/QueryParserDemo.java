@@ -26,7 +26,7 @@ public class QueryParserDemo {
 	static Directory SOURCES_DIR = new RAMDirectory();
 	static Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_35);
 	static String[] BookNames = { "engine/pylon java core 1", "pylon java swift core</z> 2", "engine\\pylon core java basic swift 3",
-			"java engine@pylon core 4", "java tutorial javise this 11-12-13 5" };
+			"java engine@pylon core 4", "j java tutorial javise this 11-12-13 5" };
 	static String[] DeleteFlags = { "false", "false", "true", "false", "true" };
 
 	public static void main(String[] args) throws CorruptIndexException, IOException, ParseException {
@@ -75,6 +75,11 @@ public class QueryParserDemo {
 		QueryParser queryParser8 = new QueryParser(Version.LUCENE_35, null, analyzer);
 		Query query8 = queryParser8.parse("BookNames:\"java swift\"~1");
 		display(SOURCES_DIR, searcher(SOURCES_DIR, query8));
+
+		System.out.println("-------------------SOURCES_DIR------Case_10----fuzzyquery--------------");
+		QueryParser queryParser10 = new QueryParser(Version.LUCENE_35, null, analyzer);
+		Query query10 = queryParser10.parse("BookNames:jave~0.2 +BookNames:javise1~0.3");
+		display(SOURCES_DIR, searcher(SOURCES_DIR, query10));
 
 		System.out.println("-------------------SOURCES_DIR------Case_9------------------");
 		QueryParser queryParser9 = new QueryParser(Version.LUCENE_35, null, analyzer);
