@@ -15,31 +15,35 @@ import org.apache.lucene.util.Version;
 // https://github.com/mwsoft/sample/blob/master/solr-filter-sample/src/jp/mwsoft/sample/lucene/filter/HTMLStripCharFilterSample.java
 public class HTMLStripCharFilterSample {
 
-    public static void main(String[] args) throws Exception {
-        MyAnalyzer analyzer = new MyAnalyzer();
+	public static void main(String[] args) throws Exception {
+		MyAnalyzer analyzer = new MyAnalyzer();
 
-        String str = "<html><head><title>title1 element1<\\/title><script>script2 element2</script></head><body>body3 element3</body></html>";
+		String str = "<html><head><title>title1 element1<\\/title><script>script2 element2</script></head><body>body3 element3 hello/world</body></html>";
 
-        Reader reader = new StringReader(str);
-        TokenStream stream = analyzer.tokenStream("", reader);
+		Reader reader = new StringReader(str);
+		TokenStream stream = analyzer.tokenStream("", reader);
 
-        while (stream.incrementToken()) {
-            CharTermAttribute term = stream.getAttribute(CharTermAttribute.class);
-            System.out.print(term.toString() + "\t");
-        }
-        // => title element body    element
-    }
+		while (stream.incrementToken()) {
+			CharTermAttribute term = stream.getAttribute(CharTermAttribute.class);
+			System.out.print(term.toString() + "\t");
+		}
+		// => title element body element
+	}
 
-    static class MyAnalyzer extends Analyzer {
-    	final static NormalizeCharMap map = new NormalizeCharMap();
-    	static {
-    		map.add( "\\/", "/");
-    	}
-        public final TokenStream tokenStream(String fieldName, Reader reader) {
-        	reader = new MappingCharFilter(map, CharReader.get(reader));
-            reader = new HTMLStripCharFilter(CharReader.get(reader));
-            TokenStream result = new StandardTokenizer(Version.LUCENE_35, reader);
-            return result;
-        }
-    }
+	static class MyAnalyzer extends Analyzer {
+		final static NormalizeCharMap preMap = new NormalizeCharMap();
+		final static NormalizeCharMap postMap = new NormalizeCharMap();
+		static {
+			preMap.add("\\/", "/");
+			postMap.add("/", " ");
+		}
+
+		public final TokenStream tokenStream(String fieldName, Reader reader) {
+			reader = new MappingCharFilter(preMap, CharReader.get(reader));
+			reader = new HTMLStripCharFilter(CharReader.get(reader));
+			reader = new MappingCharFilter(postMap, CharReader.get(reader));
+			TokenStream result = new StandardTokenizer(Version.LUCENE_35, reader);
+			return result;
+		}
+	}
 }

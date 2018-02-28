@@ -19,6 +19,7 @@ package com.wdxxl.lucene.htmlcharfilter;
 
 /**
  * A StringBuilder that allows one to access the array.
+ * 
  */
 public class OpenStringBuilder implements Appendable, CharSequence {
 	protected char[] buf;
