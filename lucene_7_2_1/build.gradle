@@ -1,0 +1,12 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories{
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.apache.lucene', name: 'lucene-core', version: '7.2.1'
+	  compile group: 'org.apache.lucene', name: 'lucene-analyzers-common', version: '7.2.1'
+	  compile group: 'org.apache.lucene', name: 'lucene-facet', version: '7.2.1'
+}
