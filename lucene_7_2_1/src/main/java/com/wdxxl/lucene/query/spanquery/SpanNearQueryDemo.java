@@ -1,4 +1,4 @@
-package com.wdxxl.query.spanquery;
+package com.wdxxl.lucene.query.spanquery;
 
 import java.io.IOException;
 
@@ -15,18 +15,18 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.spans.SpanNearQuery;
-import org.apache.lucene.search.spans.SpanNotQuery;
 import org.apache.lucene.search.spans.SpanQuery;
 import org.apache.lucene.search.spans.SpanTermQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 
-// TODO for detail specific requirement.
-public class SpanNotQueryDemo {
+//http://iamyida.iteye.com/blog/2195761
+//dog要到达quick需要经过6个跨度，需要从右至左倒序匹配，所以inOrder设置为false,如果设置为true会导致查询不出来数据。
+public class SpanNearQueryDemo {
 	Directory dir = new RAMDirectory();
 
 	public static void main(String[] args) throws IOException {
-		SpanNotQueryDemo demo = new SpanNotQueryDemo();
+		SpanNearQueryDemo demo = new SpanNearQueryDemo();
 		demo.index();
 		demo.search();
 	}
@@ -46,32 +46,19 @@ public class SpanNotQueryDemo {
 		doc.add(new TextField("text", "the quick brown fox jumps over the lazy dog", Field.Store.YES));
 		indexWriter.addDocument(doc);
 
-		doc = new Document();
-		doc.add(new TextField("text",
-				"the quick brown adult slave nice fox winde felt testcase gox quick jumps over the lazy dog",
-				Field.Store.YES));
-		indexWriter.addDocument(doc);
-
-		doc = new Document();
-		doc.add(new TextField("text", "the quick brown fox quick jumps over the lazy dog", Field.Store.YES));
-		indexWriter.addDocument(doc);
-
 		indexWriter.close();
 	}
 
 	private void search() throws IOException {
 		IndexReader reader = DirectoryReader.open(dir);
 		IndexSearcher searcher = new IndexSearcher(reader);
-
 		String queryStrStart = "dog";
 		String queryStrEnd = "quick";
-		String excludeString = "fox";
 		SpanQuery queryStart = new SpanTermQuery(new Term("text", queryStrStart));
 		SpanQuery queryEnd = new SpanTermQuery(new Term("text", queryStrEnd));
-		SpanQuery excludeQuery = new SpanTermQuery(new Term("text", excludeString));
-		SpanQuery spanNearQuery = new SpanNearQuery(new SpanQuery[] { queryStart, queryEnd }, 12, false);
-		SpanQuery spanNotQuery = new SpanNotQuery(spanNearQuery, excludeQuery, 4, 3);
-		TopDocs topDocs = searcher.search(spanNotQuery, 100);
+		SpanQuery spanNearQuery = new SpanNearQuery(new SpanQuery[] { queryStart, queryEnd }, 6, false);
+		// SpanQuery[] clausesIn, int slop, boolean inOrder
+		TopDocs topDocs = searcher.search(spanNearQuery, 100);
 		ScoreDoc[] scoreDocs = topDocs.scoreDocs;
 		for (int i = 0; i < scoreDocs.length; i++) {
 			// System.out.println(searcher.explain(spanNearQuery,
